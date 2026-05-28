@@ -1,0 +1,185 @@
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\create_tables.py
+==================================================
+
+from app.database import Base, engine
+import app.models
+
+print("Tabelas encontradas:", Base.metadata.tables.keys())
+
+Base.metadata.create_all(bind=engine)
+print("Tabelas criadas!")
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\README.md
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\create_tables.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\database.py
+==================================================
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # carrega o .env da raiz do projeto
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL is None:
+    raise RuntimeError("DATABASE_URL não foi carregada do .env")
+
+engine = create_engine(DATABASE_URL)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+Base = declarative_base()
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\main.py
+==================================================
+
+import os
+
+# Configurações
+extensoes_permitidas = ['.py', '.html', '.css', '.js', '.sql', '.md']
+pastas_ignoradas = ['venv', '.git', '__pycache__', '.idea', 'node_modules', 'dist', 'build', '.vscode']
+arquivo_saida = 'projeto_completo.txt'
+
+with open(arquivo_saida, 'w', encoding='utf-8') as outfile:
+    for root, dirs, files in os.walk('.'):
+        # Remove pastas ignoradas da busca
+        dirs[:] = [d for d in dirs if d not in pastas_ignoradas]
+        
+        for file in files:
+            if any(file.endswith(ext) for ext in extensoes_permitidas):
+                caminho_completo = os.path.join(root, file)
+                outfile.write(f"\n{'='*50}\n")
+                outfile.write(f"CAMINHO DO ARQUIVO: {caminho_completo}\n")
+                outfile.write(f"{'='*50}\n\n")
+                try:
+                    with open(caminho_completo, 'r', encoding='utf-8') as infile:
+                        outfile.write(infile.read())
+                except Exception as e:
+                    outfile.write(f"Erro ao ler arquivo: {e}")
+                outfile.write("\n")
+
+print(f"Projeto compilado em '{arquivo_saida}'. Agora faça o upload desse arquivo para a IA.")
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\core\config.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\models\item_pedido.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\models\pedido.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\models\produto.py
+==================================================
+
+from sqlalchemy import Column, Integer, String, Float
+from app.database import Base
+
+class Produto(Base):
+    __tablename__ = "produtos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, nullable=False)
+    preco = Column(Float, nullable=False)
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\models\usuario.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\models\__init__.py
+==================================================
+
+from .produto import Produto
+from .pedido import Pedido
+from .categoria import Categoria
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\routers\cozinha.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\routers\pedido.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\routers\produto.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\routers\__init__.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\schemas\item_pedido.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\schemas\pedido.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\schemas\produto.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\schemas\usuario.py
+==================================================
+
+
+
+==================================================
+CAMINHO DO ARQUIVO: .\lanchonete-system\app\schemas\services\pedido_service.py
+==================================================
+
+
