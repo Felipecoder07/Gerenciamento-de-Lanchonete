@@ -191,4 +191,4 @@ Com o servidor rodando, acesse a documentação automática gerada pelo FastAPI:
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Felipe Rabelo** — [GitHub](https://github.com/Felipecoder07)
+Desenvolvido por **Luiz Felipe** — [GitHub](https://github.com/Felipecoder07)
