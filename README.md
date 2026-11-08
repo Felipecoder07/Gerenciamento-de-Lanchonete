@@ -21,9 +21,17 @@ API RESTful desenvolvida em **Python** com **FastAPI** e **SQLAlchemy** para aut
 - **Fluxo Operacional da Cozinha (`/cozinha`)**:
   - Fila dedicada com listagem em tempo real dos pedidos `PENDENTE` e `EM_PREPARO`.
   - **Máquina de Estados Estrita** para transição de status, impedindo saltos ou regressões inválidas no preparo:
-    ```text
-    PENDENTE ──► EM_PREPARO ──► PRONTO ──► ENTREGUE
-    ```
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> PENDENTE
+    PENDENTE --> EM_PREPARO
+    EM_PREPARO --> PRONTO
+    PRONTO --> ENTREGUE
+    ENTREGUE --> [*]
+```
+
 - **Controle de Usuários e Papéis (`/usuarios`)**:
   - CRUD completo de operadores do sistema com validação de perfil (`GARCOM`, `COZINHA`, `ADMIN`).
 - **Performance & Banco de Dados**:
@@ -31,7 +39,18 @@ API RESTful desenvolvida em **Python** com **FastAPI** e **SQLAlchemy** para aut
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## 🏗️ Arquitetura e Estrutura do Projeto
+
+```mermaid
+flowchart LR
+    Garcom["Garçom"] --> API["API FastAPI + Pydantic"]
+    WhatsApp["WhatsApp"] --> API
+    Cozinha["Cozinha"] --> API
+    Admin["Admin"] --> API
+    API --> ORM["SQLAlchemy ORM"]
+    ORM --> DB[("PostgreSQL")]
+    API --> Docs["Swagger / ReDoc"]
+```
 
 ```text
 Gerenciamento-de-Lanchonete/
@@ -47,7 +66,7 @@ Gerenciamento-de-Lanchonete/
     │   ├── routers/                    # Rotas da API (FastAPI)
     │   │   ├── usuario.py              # Endpoints /usuarios
     │   │   ├── produto.py              # Endpoints /produtos
-    │   │   ├── pedido.py               # Endpoints /pedidos
+    │   │   ├── pedido.py              # Endpoints /pedidos
     │   │   └── cozinha.py              # Endpoints /cozinha
     │   ├── schemas/                    # Schemas Pydantic & Regras de Negócio
     │   │   ├── services/
